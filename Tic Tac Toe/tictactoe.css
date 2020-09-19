@@ -1,0 +1,146 @@
+*, *::after, *::before { /* selects everything on the webpage, allows for easier styling on heights and widths */
+    box-sizing: border-box;
+  }
+  
+  :root { /* CSS variables for cell sizes inside grid and marks placed inside cells */
+    --cell-size: 100px;
+    --mark-size: calc(var(--cell-size) * .9);
+  }
+  
+  body { /* makes background easier to put in place */
+    margin: 0;
+  }
+  
+  .board { /* allows grid to take up center of screen */
+    width: 100vw;
+    height: 100vh;
+    display: grid;
+    justify-content: center;
+    align-content: center;
+    justify-items: center;
+    align-items: center;
+    grid-template-columns: repeat(3, auto)
+  }
+  
+  .cell { /* defines sizes of individual cells within grid */
+    width: var(--cell-size);
+    height: var(--cell-size);
+    border: 1px solid black;
+    display: flex;
+    justify-content: center; /* aligns any items placed within the cells */
+    align-items: center; /* aligns any items placed within the cells */
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .cell:first-child, /* removes top border from top 3 cells */
+  .cell:nth-child(2),
+  .cell:nth-child(3) {
+    border-top: none;
+  }
+  
+  .cell:nth-child(3n + 1) { /* removes left border from left 3 cells, cycles through all cells */
+    border-left: none;
+  }
+  
+  .cell:nth-child(3n + 3) { /* removes right border from right 3 cells, cycles through all cells */
+    border-right: none;
+  }
+  
+  .cell:last-child, /* removes bottom border from bottom 3 cells */
+  .cell:nth-child(8),
+  .cell:nth-child(7) {
+    border-bottom: none;
+  }
+  
+  .cell.x, /* hides cursor when over filled cell */
+  .cell.circle {
+    cursor: not-allowed;
+  }
+  
+  .cell.x::before,
+  .cell.x::after,
+  .cell.circle::before {
+    background-color: black;
+  }
+  
+  .board.x .cell:not(.x):not(.circle):hover::before, /* creates background color for hover icon over empty cells */
+  .board.x .cell:not(.x):not(.circle):hover::after,
+  .board.circle .cell:not(.x):not(.circle):hover::before {
+    background-color: lightgrey;
+  }
+  
+  .cell.x::before, /* creates size of the X mark that shows within the cells */
+  .cell.x::after, /* creates size of the X mark that shows within the cells */
+  .board.x .cell:not(.x):not(.circle):hover::before, /* creates hover effect over empty cells showing either an X or O depending on turn order */
+  .board.x .cell:not(.x):not(.circle):hover::after { /* :not selector used to make sure effect does not work on cells already filled */
+    content: '';
+    position: absolute; /* allows content to overlap each other and center the cross-axis */
+    width: calc(var(--mark-size) * .15);
+    height: var(--mark-size);
+  }
+  
+  .cell.x::before,
+  .board.x .cell:not(.x):not(.circle):hover::before { /* styling the X mark out of two L's */
+    transform: rotate(45deg);
+  }
+  
+  .cell.x::after,
+  .board.x .cell:not(.x):not(.circle):hover::after { /* styling the X mark out of two L's */
+    transform: rotate(-45deg);
+  }
+  
+  .cell.circle::before,
+  .cell.circle::after,
+  .board.circle .cell:not(.x):not(.circle):hover::before,
+  .board.circle .cell:not(.x):not(.circle):hover::after { /* creates initial syling of O's within the cells */
+    content: '';
+    position: absolute; /* allows content to be placed on top of one another */
+    border-radius: 50%; /* creates perfect circle by eliminating borders */
+  }
+  
+  .cell.circle::before,
+  .board.circle .cell:not(.x):not(.circle):hover::before { /* creates first large black circle */
+    width: var(--mark-size);
+    height: var(--mark-size);
+  }
+  
+  .cell.circle::after,
+  .board.circle .cell:not(.x):not(.circle):hover::after { /* creates second smaller white circle placed on top of first circle */
+    width: calc(var(--mark-size) * .7); /* setting size to be 70% of the first circle */
+    height: calc(var(--mark-size) * .7); /* setting size to be 70% of the first circle */
+    background-color: white;
+  }
+  
+  .winning-message { /* creates positioning of winning message that appears once game is over */
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, .9);
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 5rem;
+    flex-direction: column;
+  }
+  
+  .winning-message button { /* styles button that appears once game is over */
+    font-size: 3rem;
+    background-color: white;
+    border: 1px solid black;
+    padding: .25em .5em;
+    cursor: pointer;
+  }
+  
+  .winning-message button:hover { /* creates hover effect over button */
+    background-color: black;
+    color: white;
+    border-color: white;
+  }
+  
+  .winning-message.show { /* toggled class from JS that allows background to show once game is over */
+    display: flex;
+  }
