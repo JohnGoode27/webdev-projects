@@ -1,0 +1,19 @@
+img {
+	height: 200px;
+}
+
+.productImage {
+	vertical-align: top;
+	display: inline-block;
+	/* To horizontally center images and caption */
+	text-align: center;
+	/* The width of the container also implies margin around the images. */
+	width: 30%;
+	margin-left: calc(10%/6);
+	margin-top: 5%;
+}
+
+.caption {
+	display: block;
+	padding-top: 1%;
+}
