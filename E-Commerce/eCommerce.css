@@ -17,3 +17,15 @@ img {
 	display: block;
 	padding-top: 1%;
 }
+
+.jumbotron {
+	text-align: center;
+	color: #232527;
+	background: ##18474f !important;
+}
+
+body {
+	background: #343a40 !important;
+	font-family: 'Roboto', sans-serif !important;
+	color: #eef2f3 !important;
+}
